@@ -1,7 +1,42 @@
 import { Card } from "@/components/ui/card";
 import { ArrowUpRight, Wallet, TrendingUp } from "lucide-react";
+import { useEffect } from "react";
+
+declare global {
+  interface Window {
+    TradingView: any;
+  }
+}
 
 const Index = () => {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://s3.tradingview.com/tv.js";
+    script.async = true;
+    script.onload = () => {
+      new window.TradingView.widget({
+        width: "100%",
+        height: 400,
+        symbol: "BINANCE:BTCUSDT",
+        interval: "D",
+        timezone: "Etc/UTC",
+        theme: "light",
+        style: "1",
+        locale: "en",
+        toolbar_bg: "#f1f3f6",
+        enable_publishing: false,
+        hide_side_toolbar: false,
+        allow_symbol_change: true,
+        container_id: "tradingview_chart"
+      });
+    };
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-background animate-fade-in">
       <div className="dashboard-container">
@@ -20,6 +55,7 @@ const Index = () => {
                 Connect Wallet
               </button>
             </div>
+            <div id="tradingview_chart" className="w-full h-[400px] rounded-lg overflow-hidden" />
           </Card>
           
           <Card className="stats-card">
