@@ -119,9 +119,9 @@ const Index = () => {
           </>
         )}
 
-        <div className={`${isChartFullscreen ? 'fixed inset-0 bg-background-dark' : 'grid grid-cols-1 lg:grid-cols-3 gap-6'}`}>
-          <Card className={`stats-card ${isChartFullscreen ? 'h-full w-full rounded-none border-none' : 'col-span-2'}`}>
-            <div className="flex justify-between items-start mb-6">
+        <div className={`${isChartFullscreen ? 'fixed inset-0 bg-background-dark p-2' : 'grid grid-cols-1 lg:grid-cols-3 gap-6'}`}>
+          <Card className={`stats-card ${isChartFullscreen ? 'h-full w-full rounded-lg border-none' : 'col-span-2'}`}>
+            <div className="flex justify-between items-start p-2">
               {!isChartFullscreen && (
                 <div>
                   <h2 className="text-2xl font-bold">BTC/USDT</h2>
@@ -130,12 +130,12 @@ const Index = () => {
               )}
               <button 
                 onClick={() => setIsChartFullscreen(!isChartFullscreen)}
-                className="text-primary flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-primary/10 transition-colors"
+                className="text-primary flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-primary/10 transition-colors"
               >
                 {isChartFullscreen ? (
                   <>
                     <X className="w-4 h-4" />
-                    <span className="text-sm">Exit Fullscreen</span>
+                    <span className="text-sm">Exit</span>
                   </>
                 ) : (
                   <>
@@ -148,7 +148,7 @@ const Index = () => {
             <div 
               id="tradingview_chart" 
               className={`w-full rounded-lg overflow-hidden glass-card ${
-                isChartFullscreen ? 'h-[calc(100vh-80px)]' : 'h-[500px]'
+                isChartFullscreen ? 'h-[calc(100vh-48px)]' : 'h-[500px]'
               }`} 
             />
           </Card>
