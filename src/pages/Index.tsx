@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { ArrowUpRight, Wallet, TrendingUp, Activity, DollarSign, Maximize2, Minimize2 } from "lucide-react";
+import { ArrowUpRight, Wallet, TrendingUp, Activity, DollarSign, Maximize2, Minimize2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/use-toast";
@@ -119,29 +119,36 @@ const Index = () => {
           </>
         )}
 
-        <div className={`grid ${isChartFullscreen ? '' : 'grid-cols-1 lg:grid-cols-3 gap-6'}`}>
-          <Card className={`stats-card ${isChartFullscreen ? 'h-full rounded-none' : 'col-span-2'}`}>
+        <div className={`${isChartFullscreen ? 'fixed inset-0 bg-background-dark' : 'grid grid-cols-1 lg:grid-cols-3 gap-6'}`}>
+          <Card className={`stats-card ${isChartFullscreen ? 'h-full w-full rounded-none border-none' : 'col-span-2'}`}>
             <div className="flex justify-between items-start mb-6">
-              <div>
-                <h2 className="text-2xl font-bold">BTC/USDT</h2>
-                <p className="text-sm text-muted-foreground mt-1">Real-time chart</p>
-              </div>
+              {!isChartFullscreen && (
+                <div>
+                  <h2 className="text-2xl font-bold">BTC/USDT</h2>
+                  <p className="text-sm text-muted-foreground mt-1">Real-time chart</p>
+                </div>
+              )}
               <button 
                 onClick={() => setIsChartFullscreen(!isChartFullscreen)}
-                className="text-primary flex items-center text-sm hover:opacity-80 transition-opacity"
+                className="text-primary flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-primary/10 transition-colors"
               >
                 {isChartFullscreen ? (
-                  <Minimize2 className="w-4 h-4 mr-1" />
+                  <>
+                    <X className="w-4 h-4" />
+                    <span className="text-sm">Exit Fullscreen</span>
+                  </>
                 ) : (
-                  <Maximize2 className="w-4 h-4 mr-1" />
+                  <>
+                    <Maximize2 className="w-4 h-4" />
+                    <span className="text-sm">Fullscreen</span>
+                  </>
                 )}
-                {isChartFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
               </button>
             </div>
             <div 
               id="tradingview_chart" 
               className={`w-full rounded-lg overflow-hidden glass-card ${
-                isChartFullscreen ? 'h-[calc(100vh-120px)]' : ''
+                isChartFullscreen ? 'h-[calc(100vh-80px)]' : 'h-[500px]'
               }`} 
             />
           </Card>
