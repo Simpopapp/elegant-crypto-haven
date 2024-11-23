@@ -12,6 +12,9 @@ declare global {
 
 const fetchCryptoData = async () => {
   const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,ripple,cardano&vs_currencies=usd&include_24hr_change=true');
+  if (!response.ok) {
+    throw new Error('Failed to fetch crypto data');
+  }
   return response.json();
 };
 
@@ -21,12 +24,14 @@ const Index = () => {
     queryKey: ['cryptoPrices'],
     queryFn: fetchCryptoData,
     refetchInterval: 30000,
-    onError: () => {
-      toast({
-        title: "Error fetching data",
-        description: "Could not fetch latest crypto prices",
-        variant: "destructive",
-      });
+    meta: {
+      onError: () => {
+        toast({
+          title: "Error fetching data",
+          description: "Could not fetch latest crypto prices",
+          variant: "destructive",
+        });
+      },
     },
   });
 
